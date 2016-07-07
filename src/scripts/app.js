@@ -7,6 +7,7 @@ const app = function() {
     const TimeView = React.createClass ({
 
         render: function() {
+            console.log(this.props.date.getFullYear())
             return (
             <div className = 'appContainer'>
                 <Header />
@@ -31,6 +32,10 @@ const app = function() {
             alert("You're going back in time!")
         },
 
+        _forwardTime: function () {
+            alert("You're going forward in time!")
+        },
+
         render: function () {
             return (
                 <div className = 'machine'>
@@ -44,7 +49,7 @@ const app = function() {
         }
     })
 
-    ReactDOM.render(<TimeView />, document.querySelector('.container'))
+    ReactDOM.render(<TimeView date = {new Date()} />, document.querySelector('.container'))
 }
 
 app()
