@@ -1,15 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Backbone from 'backbone'
+
+import TimeView from './TimeView.js'
 
 const app = function() {
 
-	const Header = React.createClass({
-		render: () => {
-			return <h1>YOLO</h1>
-		}
-	})
+    const TimeModel = Backbone.Model.extend ({
+        defaults: {
+            time: 'current'
+        }
+    })
 
-	ReactDOM.render(<Header/>,document.querySelector('.container'))
+    const TimeCollection = Backbone.Collection.extend({
+        model: TimeModel
+    })
+
+    ReactDOM.render(<TimeView year = {new Date} timeColl = {new TimeCollection()} />, document.querySelector('.container'))
 }
 
 app()
