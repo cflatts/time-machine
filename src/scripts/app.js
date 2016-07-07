@@ -6,16 +6,25 @@ const app = function() {
 
     const TimeView = React.createClass ({
 
-        getInitialState: function () {
-            date: this.props.date.getFullYear()
+        getInitialState: function() {
+            return {
+                date: this.props.date
+            }
+        },
+
+        componentWillMount: function() {
+            Backbone.Events.on('goBack', () => {
+                this.setState ({
+                    date: this.props.date
+                })
+            })
         },
 
         render: function() {
-            // console.log(this.props.date.getFullYear())
             return (
             <div className = 'appContainer'>
                 <Header />
-                <MachineView />
+                <MachineView date ={this.state.date} />
             </div>
               )
         }
@@ -33,7 +42,7 @@ const app = function() {
     const MachineView = React.createClass ({
 
         _reverseTime: function() {
-            alert("You're going back in time!")
+            Backbone.Events.trigger('goBack')
         },
 
         _forwardTime: function () {
@@ -41,6 +50,7 @@ const app = function() {
         },
 
         render: function () {
+            console.log(this.props.date)
             return (
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
