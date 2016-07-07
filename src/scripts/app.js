@@ -6,8 +6,12 @@ const app = function() {
 
     const TimeView = React.createClass ({
 
+        getInitialState: function () {
+            date: this.props.date.getFullYear()
+        },
+
         render: function() {
-            console.log(this.props.date.getFullYear())
+            // console.log(this.props.date.getFullYear())
             return (
             <div className = 'appContainer'>
                 <Header />
