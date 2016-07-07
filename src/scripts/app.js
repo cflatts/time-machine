@@ -2,21 +2,49 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Backbone from 'backbone'
 
-import TimeView from './TimeView.js'
-
 const app = function() {
 
-    const TimeModel = Backbone.Model.extend ({
-        defaults: {
-            time: 'current'
+    const TimeView = React.createClass ({
+
+        render: function() {
+            return (
+            <div className = 'appContainer'>
+                <Header />
+                <MachineView />
+            </div>
+              )
+        }
+
+    })
+
+    const Header = React.createClass ({
+        render: function () {
+            return (
+                <div className = 'header'>Time Machine</div>
+                )
         }
     })
 
-    const TimeCollection = Backbone.Collection.extend({
-        model: TimeModel
+    const MachineView = React.createClass ({
+
+        _reverseTime: function() {
+            alert("You're going back in time!")
+        },
+
+        render: function () {
+            return (
+                <div className = 'machine'>
+                    <div className = 'machineHeader'>Choose your time traveling adventure!</div>
+                    <div className = 'year'>2016</div>
+                    <button className = 'back' onClick = {this._reverseTime}>Back</button>
+                    <button className = 'random'>Random</button>
+                    <button className = 'forward' onClick = {this._forwardTime}>Forward</button>
+                </div>
+                )
+        }
     })
 
-    ReactDOM.render(<TimeView year = {new Date} timeColl = {new TimeCollection()} />, document.querySelector('.container'))
+    ReactDOM.render(<TimeView />, document.querySelector('.container'))
 }
 
 app()
