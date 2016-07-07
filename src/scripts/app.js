@@ -49,12 +49,15 @@ const app = function() {
             alert("You're going forward in time!")
         },
 
+        _getCurrentYear: function() {
+            return this.props.date.getFullYear()
+        },
+
         render: function () {
-            console.log(this.props.date)
             return (
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
-                    <div className = 'year'>2016</div>
+                    <div className = 'year'>{this._getCurrentYear()}</div>
                     <button className = 'back' onClick = {this._reverseTime}>Back</button>
                     <button className = 'random'>Random</button>
                     <button className = 'forward' onClick = {this._forwardTime}>Forward</button>
