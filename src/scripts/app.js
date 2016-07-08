@@ -15,7 +15,7 @@ const app = function() {
         componentWillMount: function() {
             Backbone.Events.on('goBack', () => {
                 this.setState ({
-                    date: this.props.date
+                    date: this.props.date + 1
                 })
             })
         },
@@ -41,19 +41,22 @@ const app = function() {
 
     const MachineView = React.createClass ({
 
-        _reverseTime: function() {
-            Backbone.Events.trigger('goBack')
+        _reverseTime: function(evt) {
+            // Backbone.Events.trigger('goBack')
+            {this._getCurrentYear} +1
         },
 
         _forwardTime: function () {
-            alert("You're going forward in time!")
+            return (this.props.date.getFullYear()) + 1
         },
 
         _getCurrentYear: function() {
-            return this.props.date.getFullYear()
+            var currentYear = this.props.date.getFullYear()
+            return currentYear
         },
 
         render: function () {
+            console.log(this._forwardTime())
             return (
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
