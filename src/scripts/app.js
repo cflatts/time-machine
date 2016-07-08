@@ -20,30 +20,18 @@ const app = function() {
             })
         },
 
-        render: function() {
-            return (
-            <div className = 'appContainer'>
-                <Header />
-                <MachineView date ={this.state.date} />
-            </div>
-              )
-        }
+        _reverseTime: function(evt) {
+            // Backbone.Events.trigger('goBack')
+            return (this.props.date.getFullYear()) - 1
+        },
 
-    })
-
-    const Header = React.createClass ({
-        render: function () {
-            return (
-                <div className = 'header'>Time Machine</div>
-                )
-        }
-    })
-
-    const MachineView = React.createClass ({
+        _forwardTime: function () {
+            return (this.props.date.getFullYear()) + 1
+        },
 
         _reverseTime: function(evt) {
             // Backbone.Events.trigger('goBack')
-            {this._getCurrentYear} +1
+            return (this.props.date.getFullYear()) - 1
         },
 
         _forwardTime: function () {
@@ -51,13 +39,14 @@ const app = function() {
         },
 
         _getCurrentYear: function() {
-            var currentYear = this.props.date.getFullYear()
-            return currentYear
+            return this.props.date.getFullYear()
+
         },
 
-        render: function () {
-            console.log(this._forwardTime())
+        render: function() {
             return (
+            <div className = 'appContainer'>
+                <div className = 'header'>Time Machine</div>
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
                     <div className = 'year'>{this._getCurrentYear()}</div>
@@ -65,8 +54,10 @@ const app = function() {
                     <button className = 'random'>Random</button>
                     <button className = 'forward' onClick = {this._forwardTime}>Forward</button>
                 </div>
-                )
+            </div>
+              )
         }
+
     })
 
     ReactDOM.render(<TimeView date = {new Date()} />, document.querySelector('.container'))
