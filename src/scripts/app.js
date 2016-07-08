@@ -22,7 +22,7 @@ const app = function() {
             })
         },
 
-        _reverseTime: function(evt) {
+        _reverseTime: function() {
             this.state.clickedButton = 'ahead'
             this.state.year +=1
             this.setState ({
@@ -31,13 +31,30 @@ const app = function() {
             })
         },
 
-        _forwardTime: function () {
+        _forwardTime: function() {
             this.state.clickedButton = 'behind'
             this.state.year -=1
             this.setState ({
                 date: this.state.date,
                 clickedButton: this.state.clickedButton
             })
+        },
+
+        _stop: function() {
+            this.state.clickedButton = 'ahead'
+                this.setState ({
+                    clickedButton: this.state.clickedButton
+                })
+                clearInterval(this.future)
+                clearInterval(this.past)
+        },
+
+        _increase: function() {
+            this.future = setInterval(this._reverseTime, 500)
+        },
+
+        _decrease: function() {
+            this.future = setInterval(this._forwardTime, 500)
         },
 
         _getCurrentYear: function() {
@@ -54,6 +71,7 @@ const app = function() {
                     <div className = 'year'>{this._getCurrentYear()}</div>
                     <button className = 'back' onClick = {this._reverseTime}>Back</button>
                     <button className = 'random'>Random</button>
+                    <button className = 'stop'>I'm here!</button>
                     <button className = 'forward' onClick = {this._forwardTime}>Forward</button>
                 </div>
             </div>
