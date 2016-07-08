@@ -23,13 +23,17 @@ const app = function() {
         },
 
         _reverseTime: function(evt) {
-            // Backbone.Events.trigger('goBack')
-            return (this.props.date.getFullYear()) - 1
+            this.state.clickedButton = 'ahead'
+            this.state.year +=1
+            this.setState ({
+                date: this.state.date,
+                clickedButton: this.state.clickedButton
+            })
         },
 
         _forwardTime: function () {
-            this.state.clickedButton = 'ahead'
-            this.state.year +=1
+            this.state.clickedButton = 'behind'
+            this.state.year -=1
             this.setState ({
                 date: this.state.date,
                 clickedButton: this.state.clickedButton
