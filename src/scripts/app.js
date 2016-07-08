@@ -4,11 +4,13 @@ import Backbone from 'backbone'
 
 const app = function() {
 
+
     const TimeView = React.createClass ({
 
         getInitialState: function() {
             return {
-                date: this.props.date
+                date: _getCurrentYear(),
+                clickedButton: ''
             }
         },
 
@@ -26,16 +28,12 @@ const app = function() {
         },
 
         _forwardTime: function () {
-            return (this.props.date.getFullYear()) + 1
-        },
-
-        _reverseTime: function(evt) {
-            // Backbone.Events.trigger('goBack')
-            return (this.props.date.getFullYear()) - 1
-        },
-
-        _forwardTime: function () {
-            return (this.props.date.getFullYear()) + 1
+            this.state.clickedButton = 'ahead'
+            this.state.year +=1
+            this.setState ({
+                date: this.state.date,
+                clickedButton: this.state.clickedButton
+            })
         },
 
         _getCurrentYear: function() {
