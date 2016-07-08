@@ -4,6 +4,11 @@ import Backbone from 'backbone'
 
 const app = function() {
 
+    var _getCurrentYear = function() {
+        var d = new Date ()
+        return d.getFullYear()
+    }
+
 
     const TimeView = React.createClass ({
 
@@ -49,26 +54,40 @@ const app = function() {
                 clearInterval(this.past)
         },
 
-        _increase: function() {
-            this.future = setInterval(this._reverseTime, 500)
-        },
-
         _decrease: function() {
             this.future = setInterval(this._forwardTime, 500)
         },
 
-        _getCurrentYear: function() {
-            return this.props.date.getFullYear()
-
+        _increase: function() {
+            this.future = setInterval(this._reverseTime, 500)
         },
 
         render: function() {
+
+            var behindButton =''
+            var aheadButton = ''
+            var randomButton = ''
+            var stopButton = ''
+
+            if(this.state.activeButton === 'behind') {
+                behindButton = 'behind'
+            }
+            else if (this.state.activeButton === 'ahead') {
+                aheadButton = 'ahead'
+            }
+            else if (this.state.activeButton === 'stop') {
+                aheadButton = 'stop'
+            }
+            else if (this.state.activeButton === 'random') {
+                randomButton = 'random'
+            }
+
             return (
             <div className = 'appContainer'>
                 <div className = 'header'>Time Machine</div>
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
-                    <div className = 'year'>{this._getCurrentYear()}</div>
+                    <div className = 'year'>{this.state.date}</div>
                     <button className = 'back' onClick = {this._reverseTime}>Back</button>
                     <button className = 'random'>Random</button>
                     <button className = 'stop'>I'm here!</button>
