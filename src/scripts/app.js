@@ -42,7 +42,7 @@ const app = function() {
         },
 
         _increase: function() {
-            this.future = setInterval(this._increaseTime, 1000)
+            this.future = setInterval(this._forwardTime, 1000)
         },
 
         _stop: function() {
@@ -55,7 +55,7 @@ const app = function() {
         },
 
         render: function() {
-            console.log(this._increase)
+            console.log(this._forwardTime)
             var behindButton =''
             var aheadButton = ''
             var randomButton = ''
@@ -68,7 +68,7 @@ const app = function() {
                 aheadButton = 'ahead'
             }
             else if (this.state.clickedButton === 'stop') {
-                aheadButton = 'stop'
+                stopButton = 'stop'
             }
 
             return (
