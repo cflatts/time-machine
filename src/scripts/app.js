@@ -4,7 +4,7 @@ import Backbone from 'backbone'
 
 const app = function() {
 
-    var _getCurrentYear = function() {
+    var getCurrentYear = function() {
         var d = new Date ()
         return d.getFullYear()
     }
@@ -14,22 +14,14 @@ const app = function() {
 
         getInitialState: function() {
             return {
-                date: _getCurrentYear(),
+                date: getCurrentYear(),
                 clickedButton: ''
             }
         },
 
-        componentWillMount: function() {
-            Backbone.Events.on('goBack', () => {
-                this.setState ({
-                    date: this.props.date + 1
-                })
-            })
-        },
-
         _reverseTime: function() {
-            this.state.clickedButton = 'ahead'
-            this.state.year +=1
+            this.state.clickedButton = 'behind'
+            this.state.date -=1
             this.setState ({
                 date: this.state.date,
                 clickedButton: this.state.clickedButton
@@ -37,16 +29,24 @@ const app = function() {
         },
 
         _forwardTime: function() {
-            this.state.clickedButton = 'behind'
-            this.state.year -=1
+            this.state.clickedButton = 'ahead'
+            this.state.date +=1
             this.setState ({
                 date: this.state.date,
                 clickedButton: this.state.clickedButton
             })
         },
 
+        _decrease: function() {
+            this.past = setInterval(this._reverseTime, 1000)
+        },
+
+        _increase: function() {
+            this.future = setInterval(this._increaseTime, 1000)
+        },
+
         _stop: function() {
-            this.state.clickedButton = 'ahead'
+            this.state.clickedButton = 'stop'
                 this.setState ({
                     clickedButton: this.state.clickedButton
                 })
@@ -54,32 +54,21 @@ const app = function() {
                 clearInterval(this.past)
         },
 
-        _decrease: function() {
-            this.future = setInterval(this._forwardTime, 500)
-        },
-
-        _increase: function() {
-            this.future = setInterval(this._reverseTime, 500)
-        },
-
         render: function() {
-
+            console.log(this._increase)
             var behindButton =''
             var aheadButton = ''
             var randomButton = ''
             var stopButton = ''
 
-            if(this.state.activeButton === 'behind') {
+            if(this.state.clickedButton === 'behind') {
                 behindButton = 'behind'
             }
-            else if (this.state.activeButton === 'ahead') {
+            else if (this.state.clickedButton === 'ahead') {
                 aheadButton = 'ahead'
             }
-            else if (this.state.activeButton === 'stop') {
+            else if (this.state.clickedButton === 'stop') {
                 aheadButton = 'stop'
-            }
-            else if (this.state.activeButton === 'random') {
-                randomButton = 'random'
             }
 
             return (
@@ -88,10 +77,9 @@ const app = function() {
                 <div className = 'machine'>
                     <div className = 'machineHeader'>Choose your time traveling adventure!</div>
                     <div className = 'year'>{this.state.date}</div>
-                    <button className = 'back' onClick = {this._reverseTime}>Back</button>
-                    <button className = 'random'>Random</button>
-                    <button className = 'stop'>I'm here!</button>
-                    <button className = 'forward' onClick = {this._forwardTime}>Forward</button>
+                    <button className = 'back' id = {this.behindButton} onClick = {this._decrease}>Back</button>
+                    <button className = 'stop' id = {this.stopButton} onClick = {this._stop}>I'm here!</button>
+                    <button className = 'forward' id = {this.aheadButton} onClick = {this._increase}>Forward</button>
                 </div>
             </div>
               )
@@ -99,7 +87,7 @@ const app = function() {
 
     })
 
-    ReactDOM.render(<TimeView date = {new Date()} />, document.querySelector('.container'))
+    ReactDOM.render(<TimeView />, document.querySelector('.container'))
 }
 
 app()
